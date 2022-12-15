@@ -73,5 +73,5 @@ go run cmd/server/server.go --addr=:8080
 Tamém é possível passar a string de conexão com o banco de dados como argumento. Caso não seja passado nenhum argumento, a string de conexão será `file:db.sqlite3?cache=shared`.
 
 ```bash
-go run cmd/server/server.go --db="file::memory:?cache=shared"
+go run cmd/server/server.go --dsn="file:db.sqlite3?cache=shared"
 ```
