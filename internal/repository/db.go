@@ -1,4 +1,4 @@
-package db
+package repository
 
 import (
 	"database/sql"
@@ -23,17 +23,26 @@ const createCambiumTable = `
 	)
 `
 
-func InitDb(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", dsn)
+var (
+	db  *sql.DB
+	err error
+)
+
+func InitDb(dsn string) error {
+	db, err = sql.Open("sqlite3", dsn)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	err = db.Ping()
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if _, err := db.Exec(createCambiumTable); err != nil {
-		return nil, err
+		return err
 	}
-	return db, nil
+	return nil
+}
+
+func CloseDb() error {
+	return db.Close()
 }

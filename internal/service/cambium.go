@@ -23,7 +23,7 @@ type CambiumData struct {
 
 type CambiumResponse map[string]CambiumData
 
-func GetCambium(ctx context.Context, from, to string) (*CambiumResponse, error) {
+func GetCambium(ctx context.Context, from, to string) (CambiumResponse, error) {
 	url := fmt.Sprintf("https://economia.awesomeapi.com.br/json/last/%s-%s", from, to)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -41,5 +41,5 @@ func GetCambium(ctx context.Context, from, to string) (*CambiumResponse, error) 
 		return nil, err
 	}
 
-	return &data, nil
+	return data, nil
 }

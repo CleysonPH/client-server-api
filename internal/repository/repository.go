@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/google/uuid"
 )
@@ -22,7 +21,7 @@ type CambiumModel struct {
 	CreateDate string
 }
 
-func InsertCambium(ctx context.Context, db *sql.DB, cm *CambiumModel) error {
+func InsertCambium(ctx context.Context, cm *CambiumModel) error {
 	query := `
 		INSERT INTO cambium (
 			id,
