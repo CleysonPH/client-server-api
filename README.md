@@ -29,3 +29,49 @@ O `client.go` terá que salvar a cotação atual em um arquivo "cotacao.txt" no 
 O endpoint necessário gerado pelo `server.go` para este desafio será: /cotacao e a porta a ser utilizada pelo servidor HTTP será a 8080.
 
 Ao finalizar, envie o link do repositório para correção.
+
+## Solução
+
+### Client
+
+O client é um programa que faz uma requisição HTTP para o servidor e salva o valor da cotação em um arquivo.
+
+Para executar o client, basta executar o comando abaixo:
+
+```bash
+go run cmd/client/client.go
+```
+
+É possível passar o nome do arquivo que será salvo o valor da cotação como argumento. Caso não seja passado nenhum argumento, o valor da cotação será salvo no arquivo `cotacao.txt`.
+
+```bash
+go run cmd/client/client.go --filename=meu-arquivo.txt
+```
+
+Também é possível passar o endereço do servidor como argumento. Caso não seja passado nenhum argumento, o endereço do servidor será `http://localhost:8080`.
+
+```bash
+go run cmd/client/client.go --addr=http://localhost:8080
+```
+
+### Server
+
+O server é um programa que faz uma requisição HTTP para a API de cotação do dólar e salva o valor da cotação no banco de dados.
+
+Para executar o server, basta executar o comando abaixo:
+
+```bash
+go run cmd/server/server.go
+```
+
+É possível passar o endereço em que o servidor HTTP será executado como argumento. Caso não seja passado nenhum argumento, o endereço do servidor será `:8080`.
+
+```bash
+go run cmd/server/server.go --addr=:8080
+```
+
+Tamém é possível passar a string de conexão com o banco de dados como argumento. Caso não seja passado nenhum argumento, a string de conexão será `file:db.sqlite3?cache=shared`.
+
+```bash
+go run cmd/server/server.go --db="file::memory:?cache=shared"
+```
