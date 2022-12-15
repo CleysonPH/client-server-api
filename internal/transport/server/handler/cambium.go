@@ -2,7 +2,7 @@ package handler
 
 import (
 	"context"
-	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -27,6 +27,7 @@ func GetCambium(w http.ResponseWriter, r *http.Request) {
 
 	cambiumResp, err := service.GetCambium(ctx, from, to)
 	if err != nil {
+		log.Println(err)
 		if ctx.Err() == context.DeadlineExceeded {
 			http.Error(w, "timeout to get data", http.StatusGatewayTimeout)
 			return
@@ -53,6 +54,7 @@ func GetCambium(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel = context.WithTimeout(ctx, 10*time.Millisecond)
 	defer cancel()
 	if err := repository.InsertCambium(ctx, cambiumM); err != nil {
+		log.Println(err)
 		if ctx.Err() == context.DeadlineExceeded {
 			http.Error(w, "timeout to insert data", http.StatusGatewayTimeout)
 			return
@@ -62,5 +64,5 @@ func GetCambium(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(cambiumData)
+	w.Write([]byte(cambiumData.Bid))
 }

@@ -7,11 +7,11 @@ import (
 	"github.com/CleysonPH/client-server-api/internal/transport/server/handler"
 )
 
-func Run() {
-	repository.InitDb("file:db.sqlite3?cache=shared")
+func Run(dsn, addr string) {
+	repository.InitDb(dsn)
 	defer repository.CloseDb()
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/cotacao", handler.GetCambium)
-	http.ListenAndServe(":8081", mux)
+	http.ListenAndServe(addr, mux)
 }
